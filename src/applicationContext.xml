@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<bean id="helloWorld" class="com.bus.spring.beans.HelloWorld">
+	 <!-- <property name="name" value="Spring"/>  -->
+	 <property name="name2" value="this is name2 "/>
+	</bean>
+	
+	<bean id="car" class="com.bus.spring.beans.Car">
+		<constructor-arg  value="ford"></constructor-arg>
+		<constructor-arg   value="shagnhai"></constructor-arg>
+		<constructor-arg  value="123"></constructor-arg>
+		<constructor-arg  value="350"></constructor-arg>
+	
+	</bean>
+	
+	<bean id="car2" class="com.bus.spring.beans.Car">
+		<constructor-arg   value="ford" type="java.lang.String"></constructor-arg>
+		<constructor-arg    type="java.lang.String"> <value>Shanghai</value></constructor-arg>
+		<constructor-arg   value="250.1" type="double"/>
+		<constructor-arg   value="289" type="java.lang.Integer"/>
+	
+	</bean>
+	
+	<bean	id="person" class="com.bus.spring.beans.Person">
+		<property name="name"	value="小明"></property>
+		<property name="age" value = "25"></property>
+		<property name="car" >
+			<bean class="com.bus.spring.beans.Car">
+				<constructor-arg value="Audi" />
+				<constructor-arg  ><null/></constructor-arg>
+				<constructor-arg value="321"/>
+				<constructor-arg  value="999"/>
+			</bean>
+		</property>
+	</bean>
+	
+<!-- 		<bean	id="person2" class="com.bus.spring.beans.Person">
+		<property name="name"	value="小明"></property>
+		<property name="age" value = "25"></property>
+	 
+		
+		<property name="car.maxSpeed" value="110" />
+	</bean> -->
+	
+	<bean id = "person3" class="com.bus.spring.beans.collections.Person">
+		<property name="name" value="jesus"/>
+		<property name="age" value="100"/>
+		<property name="cars" >
+			<list>
+			<ref bean="car"/>
+			<ref bean="car2"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="newPerson" class="com.bus.spring.beans.collections.NewPerson">
+	<property name="name" value="fangfang"></property>
+	<property name="age" value="30"></property>
+	<property name="cars">
+			<map>
+				<entry key="AA" value-ref="car"></entry>
+				<entry key="BB" value-ref="car2"></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="com.bus.spring.beans.collections.DataSource">
+		<property name="properties">
+			<props>
+				<prop key="user">root</prop>
+				<prop key="password">1234</prop>
+				<prop key="jdbcUrl">jdbc:mysql:///test</prop>
+				<prop key="driverClass">com.mysql.jdbc.Driver</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<util:list id="cars">
+		<ref bean="car"/>	
+		<ref bean="car2"/>	
+	</util:list>
+	
+	<!-- 使用util共享 bean  -->
+	<bean id="person4" class="com.bus.spring.beans.collections.Person">
+		<property name="name" value="Jack"></property>
+		<property name="age" value="29"></property>
+		<property name="cars" ref="cars"></property>
+	</bean>
+	
+	<!-- 通过p 命名空间为bean的属性赋值，以供多个bean的属性赋值，需要先导入p 命名空间 -->
+	<bean id="person5" class="com.bus.spring.beans.collections.Person" p:age="30" p:name="rose" p:cars-ref="cars">
+	</bean>
+	
+</beans>
